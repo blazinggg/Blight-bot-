@@ -376,8 +376,8 @@ class HypixelCommands(commands.Cog):
         if str(after.id) == "578672290510667786":
             trusted = discord.utils.get(after.guild.roles, name="Trusted")
             if trusted in after.roles:
-                asyncio.sleep(5)
-                after.remove_roles(trusted)
+                await asyncio.sleep(5)
+                await after.remove_roles(trusted)
         
         
     @commands.command(name="verify")
