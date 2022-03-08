@@ -371,6 +371,9 @@ class HypixelCommands(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
+        print(after.id)
+        print("950885110272626708")
+      
         if str(after.id) == "950885110272626708":
             trusted = discord.utils.get(after.guild.roles, name="Trusted")
             if trusted in after.roles:
