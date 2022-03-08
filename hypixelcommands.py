@@ -370,8 +370,8 @@ class HypixelCommands(commands.Cog):
                                                                                                          
 
     @commands.Cog.listener()
-    async def on_member_update(before, after):
-        if String(after.id) == "950885110272626708":
+    async def on_member_update(self, before, after):
+        if str(after.id) == "950885110272626708":
             trusted = discord.utils.get(after.guild.roles, name="Trusted")
             if trusted in after.roles:
                 asyncio.sleep(5)
