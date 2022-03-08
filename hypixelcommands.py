@@ -572,77 +572,13 @@ class HypixelCommands(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         baddata = await session.get(f"https://api.hypixel.net/player?key={API_KEY}&uuid={uuid[i]}")
                         data = await baddata.json()
-                    try:
-                        async with aiohttp.ClientSession() as session:
-                            bestprofnf = await session.get(f'https://hypixel-api.senither.com/v1/profiles/{uuid[i]}/weight?key={API_KEY}')
-                            bestprof = await bestprofnf.json()
-                            badweight = bestprof["data"]["weight"]
-                    except:
-                        badweight = 0
-                        pass
-
-                    weight = round(badweight, 2)
-                    try:
-                        bedwars_star = data["player"]["achievements"]["bedwars_level"]
-                    except:
-                        bedwars_star = 0
-                    try:
-                        bedwars_final_death = data["player"]["stats"]["Bedwars"]["final_deaths_bedwars"]
-                    except:
-                        bedwars_final_death = 0
-                    try:
-                        bedwars_final_kills = data["player"]["stats"]["Bedwars"]["final_kills_bedwars"]
-                    except:
-                        bedwars_final_kills = 0
+                    pp, ppp = await get_reqs(data)
                     
-                    try:
-                        duelskills = data["player"]["stats"]["Duels"]["kills"]
-                    except:
-                        duelskills = 0
-                    try:
-                        duelsdeaths = data["player"]["stats"]["Duels"]["deaths"]
-                    except:
-                        duelsdeaths = 0
-                    try:
-                        notroundedduelskdr = duelskills/float(duelsdeaths)
-                    except:
-                        notroundedduelskdr = 0
-                    try:
-                        duelskdr = round(notroundedduelskdr, 2)
-                    except:
-                        duelskdr = 0
-                    try:
-                        duelswins = data["player"]["stats"]["Duels"]["wins"]
-                    except:
-                        duelswins = 0
-                    try:
-                        duelslosses = data["player"]["stats"]["Duels"]["losses"]
-                    except:
-                        duelslosses = 0
-                    try:
-                        bigduelswlr = duelswins/float(duelslosses)
-                    except:
-                        bigduelswlr = 0
-                    try:
-                        duelswlr = round(bigduelswlr, 2)
-                    except:
-                        duelswlr = 0
-                    try:
-                        bigfkdr = bedwars_final_kills/float(bedwars_final_death)
-                    except:
-                        bigfkdr = 0
-                    try:
-                        fkdr = round(bigfkdr, 2)
-                    except:
-                        fkdr = 0
-                    try:
-                        indexnotint = fkdr*2*bedwars_star
-                    except:
-                        indexnotint = 0
-                    try:
-                        index = int(indexnotint)
-                    except:
-                        index = 0
+                    bedwars_star = pp[0]
+                    fkdr = pp[1]
+                    index = pp[2]
+                    duelswins = ppp[0]
+                    duelswlr = ppp[1]
                     if index >= 550 and int(bedwars_star) >= 150 and float(fkdr) >= float(1) and duelswins >= 1500 and duelswlr >= 2:
                         async with aiohttp.ClientSession() as session:
                             badname = await session.get(f"https://sessionserver.mojang.com/session/minecraft/profile/{uuid[i]}")
