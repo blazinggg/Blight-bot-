@@ -369,11 +369,15 @@ class HypixelCommands(commands.Cog):
             
                                                                                                          
 
-    #@commands.Cog.listener()
-    #async def on_command_error(self, ctx, error):
-        #if isinstance(error, commands.MissingRequiredArgument):
-            #embed = discord.Embed(title="IGN is missing!", description="Include the IGN after the title.", colour=discord.Colour.random())
-            #await ctx.send(embed=embed)
+    @commands.Cog.listener()
+    async def on_member_update(before, after):
+        if String(after.id) == "950885110272626708":
+            trusted = discord.utils.get(after.guild.roles, name="Trusted")
+            if trusted in after.roles:
+                asyncio.sleep(5)
+                after.remove_roles(trusted)
+        
+        
     @commands.command(name="verify")
     async def verify(self, ctx, *, IGN):
         """Verifies a user and gives them their guild roles."""
