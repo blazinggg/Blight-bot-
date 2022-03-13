@@ -391,6 +391,7 @@ class HypixelCommands(commands.Cog):
                 response = await session.get(url)
                 bresponse = await response.json()
             uuid = bresponse['id']
+            bettername = bresponse['name']
             
             url = f"https://api.hypixel.net/player?key={API_KEY}&uuid={uuid}"
             print(url)
@@ -398,7 +399,7 @@ class HypixelCommands(commands.Cog):
                 baddata = await session.get(url)
                 data = await baddata.json()
                 stat = data["player"]["socialMedia"]["links"]["DISCORD"]
-            bettername = IGN.capitalize()
+            
             name = str(ctx.author)
 
             
