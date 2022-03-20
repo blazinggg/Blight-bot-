@@ -15,7 +15,7 @@ import math
 from hypixel import get_data, get_uuid, get_level, get_reqs, check_reqs
 import requests
 
-
+pingdeny = "a"
 
 
 colors = [0xFF3333, 0x761954, 0xc34a17, 0x005073, 0x146f85, 0xbf4055, 0x40bfaa, 0x674d93, 0xf474d0, 0x278d39, 0x9f1616]
@@ -174,7 +174,9 @@ class HypixelCommands(commands.Cog):
             try:
                 global bedwars_star, bedwars_final_death, bedwars_final_kills, bigfkdr, fkdr, index, swkdr, swlevel 
                 
-                
+                global pingdeny
+                pingdeny = ctx.author 
+                print(pingdeny)  
                     
                 data = await get_data(uuid=uuid)    
                 network_experience = data["player"]["networkExp"]
@@ -306,6 +308,7 @@ class HypixelCommands(commands.Cog):
             await staffchat.send(f"{ctx.author.mention} That is not a channel you can use the command 'deletechannel' in.") 
 
               
+              
     @commands.command(name="accept")
     @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
 
@@ -320,18 +323,21 @@ class HypixelCommands(commands.Cog):
         if ign is None:
             print('oi')
             if str(ctx.message.channel) not in channel_list:
+                def check(message):
+                    return message.content.lower() == "yes"
                 print()
                 logs = discord.utils.get(ctx.guild.channels, name="blight-bot-logs")
                 await logs.send(f'{ctx.author.mention} Since you did not specify the IGN of the user you are accepting please make sure to manually add them, for future notice please specify them as it is more convienient and looks better.')
-                embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slots. Please say yes to acknowledge this message.", colour=permcolor)
+                embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slots.", colour=permcolor)
                 await ctx.send(embed=embed)
 
-                reply = await self.bot.wait_for('message')
+                reply = await self.bot.wait_for('message', check=check)
+                
                 
                 
                 x = reply.author
                 print(x)
-                await x.add_roles(accepted)
+                await pingdeny.add_roles(accepted)
                 await asyncio.sleep(10)
                 print('deleting!')
                 await ctx.channel.delete()
@@ -342,16 +348,17 @@ class HypixelCommands(commands.Cog):
             try:
                 if str(ctx.message.channel) not in channel_list:
                     print('bye')
-                    embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slots. This channel will be deleted in 10 seconds.", colour=permcolor)
+                    embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slots. **This Channel will be closed in 10 seconds!**", colour=permcolor)
                     await ctx.send(embed=embed)
+                    reply = await self.bot.wait_for('message')
                     waitinglist = discord.utils.get(ctx.guild.channels, name="invite-waiting-list")
                     
-                    await waitinglist.send(f"{ign.capitalize()} ({ctx.author.mention})")
+                    await waitinglist.send(f"You have been accepted, {pingdeny.mention}. Please read the pinned message!\nIGN: {ign.capitalize()}")
                     
                     
                     x = reply.author
                     print(x)
-                    await x.add_roles(accepted)
+                    await pingdeny.add_roles(accepted)
                     await asyncio.sleep(10)
                     print('deleting!')
                     await ctx.channel.delete()
@@ -364,6 +371,9 @@ class HypixelCommands(commands.Cog):
                 
             
                     
+                    
+            
+                
             
                 
             
