@@ -425,6 +425,7 @@ class HypixelCommands(commands.Cog):
             warden = discord.utils.get(ctx.guild.roles, name="Warden｡:+*")
             mvp = discord.utils.get(ctx.guild.roles, name="MVP｡:+*")
             executive = discord.utils.get(ctx.guild.roles, name="Executive｡:+*")
+            recruiter= discord.utils.get(ctx.guild.roles, name="Recruiter")
 
             if name==statv2:
                 if statv2=="blozo#1918":
@@ -475,8 +476,8 @@ class HypixelCommands(commands.Cog):
                                 await ctx.author.remove_roles(Unverified)
                                 embed = discord.Embed(title="Verified!", description=f"You have been verified and given the role {formatted_rank}.", colour=discord.Colour.random())
                                 await ctx.send(embed=embed)
-                            elif formatted_rank == "Executive" or "Exec":
-                                await ctx.author.add_roles(executive)
+                            elif formatted_rank == "Recruiter":
+                                await ctx.author.add_roles(recruiter)
                                 await ctx.author.add_roles(aerial)
                                 await ctx.author.remove_roles(guest)
                                 await ctx.author.remove_roles(Unverified)

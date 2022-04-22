@@ -18,18 +18,16 @@ from keep_alive import keep
 import dns
 import pprint
 
-
-
-
-
-
 token = os.environ["token"]
 
 intents = discord.Intents.default()
 intents.members = True
 intents.reactions = True
-activities = [discord.Game(name="Playing with Blight nons"),
-discord.Activity(type=discord.ActivityType.watching, name="Watching Blight non")]
+activities = [
+    discord.Game(name="Playing with Blight nons"),
+    discord.Activity(type=discord.ActivityType.watching,
+                     name="Watching Blight non")
+]
 activity = random.choice(activities)
 
 bot = commands.Bot(command_prefix="b!",
@@ -45,12 +43,9 @@ class MyNewHelp(commands.MinimalHelpCommand):
             await destination.send(embed=emby)
 
 
-
-
 bot.help_command = MyNewHelp()
 
 bot.load_extension("Error")
-
 
 bot.load_extension("leaderboards")
 
@@ -66,7 +61,3 @@ keep()
 print("Check")
 
 bot.run(token)
-
-
-
-
