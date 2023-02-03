@@ -23,7 +23,16 @@ import random
 
 quoteids = ["587390710974644311", "244542234895187979"]
 
+verify_channel = 784140482334556160
 
+verify_message = """<@684986294459564042>   << Use this bot :p
+
+make sure you click the pop-up!
+If you verify and it says you're already verified you might need to re-verify by unverifying and reverifying.
+
+Ignore this  >>https://cdn.discordapp.com/attachments/784140482334556160/1059932798087077957/unknown.png
+>>https://imgur.com/8ILZ3LX
+"""
 
 
 token = os.environ["token"]
@@ -124,6 +133,9 @@ class Cool(commands.Cog):
         elif str(message.channel) == "quote-book-submissions":
             await message.add_reaction(emoji)
             await message.add_reaction(emoji1)
+        elif message.author.id != 850128850213011496 and message.channel.id == verify_channel:
+          await message.channel.purge(limit=2)
+          await message.channel.send(verify_message)
     @commands.command(name="mango")
     async def mango(self, ctx):
         """Mango."""
@@ -227,10 +239,4 @@ class Cool(commands.Cog):
 
 def setup(bot: commands.Bot):
     bot.add_cog(Cool(bot))
-
-
-
-
-    
-
 
