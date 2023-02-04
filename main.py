@@ -1,3 +1,4 @@
+#Importing - Does not require explanation
 from discord.ext import commands
 import discord
 import requests
@@ -18,6 +19,7 @@ from keep_alive import keep
 import dns
 import pprint
 
+#Getting token and creating bot
 token = os.environ["token"]
 
 intents = discord.Intents.default()
@@ -32,9 +34,12 @@ activity = random.choice(activities)
 
 bot = commands.Bot(command_prefix="b!",
                    intents=intents,
-                   status=discord.Status.offline)
+                   status=discord.Status.online)
 
 
+
+
+#Setting help command
 class MyNewHelp(commands.MinimalHelpCommand):
     async def send_pages(self):
         destination = self.get_destination()
@@ -42,22 +47,18 @@ class MyNewHelp(commands.MinimalHelpCommand):
             emby = discord.Embed(description=page)
             await destination.send(embed=emby)
 
+#Loading cogs
+cogs = ['Error', 'leaderboards', 'somecommands', 'hypixelcommands', 'moderativecommands', 'Image']
 
-bot.help_command = MyNewHelp()
+for cog in cogs:
+  try:
+    bot.load_extension(cog)
+  except:
+    print(f'Failed to log {cog}')
 
-bot.load_extension("Error")
-
-bot.load_extension("leaderboards")
-
-bot.load_extension("somecommands")
-
-bot.load_extension("hypixelcommands")
-
-bot.load_extension("moderativecommands")
-
-bot.load_extension("Image")
-
+#Some code that does something   
 keep()
 print("Check")
 
+#Running bot
 bot.run(token)
