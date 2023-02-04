@@ -1,3 +1,4 @@
+#Importing
 from discord.ext.commands.errors import MissingRequiredArgument
 import requests
 from discord.ext import commands, tasks
@@ -18,7 +19,7 @@ import ssl
 import os
 
 
-
+#Setting some stuff
 colors = [0xFF3333, 0x761954, 0xc34a17, 0x005073, 0x146f85, 0xbf4055, 0x40bfaa, 0x674d93, 0xf474d0, 0x278d39, 0x9f1616]
 
 icon_list = ["https://media.discordapp.net/attachments/850445045937209365/852944234674913320/blight_1.png", 'https://media.discordapp.net/attachments/850445045937209365/852944263083589672/blight_2.png', "https://media.discordapp.net/attachments/850445045937209365/852944312379637830/blight_3.png", "https://media.discordapp.net/attachments/850445045937209365/852973375885279272/blight-5.png"]
@@ -29,7 +30,7 @@ channel_list = ["what-to-do", "applications", "verify", "portal", "invite-waitin
 
 
 
-
+#Creating ModerativeCommands cog
 class ModerativeCommands(commands.Cog):
     """Moderative Commands"""
     def convert(self, time):
@@ -46,20 +47,14 @@ class ModerativeCommands(commands.Cog):
 
         return val * time_dict[unit]
     
-
     
     import discord
-
-    
-    
-
-        
-
-
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.last_msg = None
+        
+    #Creating spam command - Spam pings a member and violates discord developer tos  
     @commands.command(name="spam")
     async def spam(self, ctx, member: discord.Member):
         """Only useable by blazing."""
@@ -71,7 +66,7 @@ class ModerativeCommands(commands.Cog):
             await ctx.send(f'{ctx.author.mention} dumbo')
         
      
-
+    #Creating mute command - Mutes a member
     @commands.command(name="mute", aliases=["Mute", "tempmute", "Tempmute"])
     @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def mute_command(self, ctx, member: discord.Member=None, unconvertedtime=None, reason=None):
@@ -215,6 +210,8 @@ class ModerativeCommands(commands.Cog):
                 await ctx.send(embed=embed)
         except Exception as e:
             print(e)
+    
+    #Creating unmute command - Unmutes a member
     @commands.command(name="unmute", aliases=["Unmute"])
     @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def unmute(self, ctx, member: discord.Member):
@@ -254,7 +251,8 @@ class ModerativeCommands(commands.Cog):
             staffcommands = discord.utils.get(ctx.guild.channels, name="staff-bot-commands")
             await staffcommands.send(ctx.author.mention, delete_after=0.1)
             await staffcommands.send(embed=embed)
-        
+    
+    #Creating pingg command - Sends bot API latency
     @commands.command(name="pingg")
     async def pingg(self, ctx: commands.Context):
         """Get the bots current API latency"""
@@ -263,6 +261,8 @@ class ModerativeCommands(commands.Cog):
         end_time = time.time()
 
         await message.edit(content=(f'Pong! {round(self.bot.latency * 1000)}ms\nAPI: {round((end_time - start_time) * 1000)}ms'))
+    
+    #Creating kick command - Kicks a member
     @commands.command(name="kick")
     @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def kick(self, ctx, member: discord.Member=None, reason=None):
@@ -287,6 +287,8 @@ class ModerativeCommands(commands.Cog):
                 await member.kick()
         except Exception as e:
             print(e)
+            
+    #Creating ban command - Bans a member      
     @commands.command(name="ban")
     @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def ban(self, ctx, member: discord.Member=None, reason=None):
@@ -311,6 +313,8 @@ class ModerativeCommands(commands.Cog):
                 await member.ban()
         except Exception as e:
             print(e)
+            
+    #Creating unban command - Unbans a member
     @commands.command(name="unban")
     @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def unban(self, ctx, *, member):
@@ -327,11 +331,12 @@ class ModerativeCommands(commands.Cog):
             else:
                 embed = discord.Embed(title="Failed!", description="This user was not banned?", colour=random.choice(colors))
     
+    #Creating member command - Lists roles of a certain member
     @commands.command(name="member")
     async def member(self, ctx, member: discord.Member):
         print(member.roles)
 
     
-
+#Setting up as loadable cog
 def setup(bot: commands.Bot):
     bot.add_cog(ModerativeCommands(bot))
