@@ -30,8 +30,8 @@ verify_message = """<@684986294459564042>   << Use this bot :p
 make sure you click the pop-up!
 If you verify and it says you're already verified you might need to re-verify by unverifying and reverifying.
 
-Ignore this  >>https://cdn.discordapp.com/attachments/784140482334556160/1059932798087077957/unknown.png
->>https://imgur.com/8ILZ3LX
+Ignore this >> https://cdn.discordapp.com/attachments/784140482334556160/1059932798087077957/unknown.png
+https://imgur.com/8ILZ3LX
 """
 
 
