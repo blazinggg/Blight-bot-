@@ -133,9 +133,9 @@ class Cool(commands.Cog):
         elif str(message.channel) == "quote-book-submissions":
             await message.add_reaction(emoji)
             await message.add_reaction(emoji1)
-        elif message.author.id != 850128850213011496 and message.channel.id == verify_channel:
-          await message.channel.purge(limit=2)
-          await message.channel.send(verify_message)
+        #elif message.author.id != 850128850213011496 and message.channel.id == verify_channel:
+          #await message.channel.purge(limit=2)
+          #await message.channel.send(verify_message)
     @commands.command(name="mango")
     async def mango(self, ctx):
         """Mango."""
