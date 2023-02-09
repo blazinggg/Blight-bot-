@@ -182,11 +182,9 @@ class HypixelCommands(commands.Cog):
                 network_experience = data["player"]["networkExp"]
                 network_level = (math.sqrt((2 * network_experience) + 30625) / 50) - 2.5
                 network_level = round(network_level, 2)
-                if int(network_level) < 55:
-                    embed = discord.Embed(title="You do not make our hypixel level requirement.", description="Please apply only after you make our game requirements and hypixel level requirements.", colour = color)
-                    await channel.send(embed=embed)
-                    await asyncio.sleep(120)
-                    await application_channel.delete()    
+                #Ignore this if statement I just can't be bothered fixing the indentation of removing it completely
+                if int(network_level) < 0:
+                    pass
                 else:
                     try:
                         async with aiohttp.ClientSession() as session:
