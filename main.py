@@ -54,7 +54,7 @@ for cog in cogs:
   try:
     bot.load_extension(cog)
   except:
-    print(f'Failed to log {cog}')
+    print(f'Failed to load {cog}')
 
 #Some code that does something   
 keep()
