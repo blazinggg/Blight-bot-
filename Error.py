@@ -24,7 +24,7 @@ class ErrorHandler(commands.Cog):
             message = "Oh no! Something went wrong while running the command!"
             print(error)
 
-        embed = discord.Embed(title="Error!", description=f"{message}", colour=discord.Colour.random())
+        embed = discord.Embed(title="Error!", description=message, colour=discord.Colour.random())
         await ctx.send(embed=embed, delete_after=5)
 
 def setup(bot: commands.Bot):
