@@ -560,7 +560,6 @@ class HypixelCommands(commands.Cog):
         
     @commands.command(name="gamereqs", aliases=["GameReqs", "Gamerequirements", "gamerequirements", "gq"])
     @commands.cooldown(rate=1, per=3600)
-    @commands.has_role("Bloozing")
     async def gamereqs(self, ctx):
         def sw_xp_to_lvl(xp):
             xps = [0, 20, 70, 150, 250, 500, 1000, 2000, 3500, 6000, 10000, 15000]
@@ -637,7 +636,6 @@ class HypixelCommands(commands.Cog):
             embed = discord.Embed(title="Gamereqs", description=f"{gamereqs}", colour = discord.Colour.random())
             await ctx.send(embed=embed)
     @commands.command(name="check", aliases=["ch", "chgq"])
-    @commands.has_role("Bloozing")
     @commands.cooldown(rate=1, per=10)
 
     async def check(self, ctx, IGN = None):
@@ -671,7 +669,25 @@ class HypixelCommands(commands.Cog):
             
             
 
-
+    @commands.command(name="invited", aliases=["Log", "log", "invite", "Invited", "Invite"])
+    @commands.has_any_role("Recruiter｡:+*", "Warden｡:+*", "Executive｡:+*", "Demonical｡:+*")
+    async def invited(self, ctx, member):
+      ctx.channel.id = 733166354764660767
+      
+      url = f'https://api.mojang.com/users/profiles/minecraft/{member}?'
+      async with aiohttp.ClientSession() as session:
+        response = await session.get(url)
+        bresponse = await response.json()
+        uuid = bresponse['id']
+        async with aiohttp.ClientSession() as session:
+          baddata = await session.get(f"https://api.hypixel.net/player?key={API_KEY}&uuid={uuid}")
+          data = await baddata.json()
+          rqo, rqt = await get_reqs(data)
+          chrq = await check_reqs(rqo, rqt)
+          if chrq == True:
+            await ctx.send(f'{member} was invited by {ctx.author.mention}.\nInvite meets requirements')
+          else:
+            await ctx.send(f'{member} was invited by {ctx.author.mention}.\nInvite does not meet requirements')
 
 
 
