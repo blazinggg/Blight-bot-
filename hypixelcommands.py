@@ -672,7 +672,7 @@ class HypixelCommands(commands.Cog):
     @commands.command(name="invited", aliases=["Log", "log", "invite", "Invited", "Invite"])
     @commands.has_any_role("Recruiter｡:+*", "Warden｡:+*", "Executive｡:+*", "Demonical｡:+*")
     async def invited(self, ctx, member):
-      ctx.channel.id = 733166354764660767
+        await ctx.message.delete()
       
       url = f'https://api.mojang.com/users/profiles/minecraft/{member}?'
       async with aiohttp.ClientSession() as session:
@@ -684,6 +684,7 @@ class HypixelCommands(commands.Cog):
           data = await baddata.json()
           rqo, rqt = await get_reqs(data)
           chrq = await check_reqs(rqo, rqt)
+          ctx.channel.id = 733166354764660767
           if chrq == True:
             await ctx.send(f'{member} was invited by {ctx.author.mention}.\nInvite meets requirements')
           else:
