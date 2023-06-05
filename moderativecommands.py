@@ -73,7 +73,7 @@ class ModerativeCommands(commands.Cog):
      
 
     @commands.command(name="mute", aliases=["Mute", "tempmute", "Tempmute"])
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def mute_command(self, ctx, member: discord.Member=None, unconvertedtime=None, reason=None):
         """Only useable by staff, mutes a user"""
         muted = discord.utils.get(ctx.guild.roles, name="Muted")
@@ -216,7 +216,7 @@ class ModerativeCommands(commands.Cog):
         except Exception as e:
             print(e)
     @commands.command(name="unmute", aliases=["Unmute"])
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def unmute(self, ctx, member: discord.Member):
         """Only useable by staff, unmutes a user."""
         muted = discord.utils.get(ctx.guild.roles, name="Muted")
@@ -264,7 +264,7 @@ class ModerativeCommands(commands.Cog):
 
         await message.edit(content=(f'Pong! {round(self.bot.latency * 1000)}ms\nAPI: {round((end_time - start_time) * 1000)}ms'))
     @commands.command(name="kick")
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def kick(self, ctx, member: discord.Member=None, reason=None):
         """Only useable by staff, kicks a user."""
         try:
@@ -288,7 +288,7 @@ class ModerativeCommands(commands.Cog):
         except Exception as e:
             print(e)
     @commands.command(name="ban")
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def ban(self, ctx, member: discord.Member=None, reason=None):
         """Only useable by staff, bans a user."""
         try:
@@ -312,7 +312,7 @@ class ModerativeCommands(commands.Cog):
         except Exception as e:
             print(e)
     @commands.command(name="unban")
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     async def unban(self, ctx, *, member):
         banned_users = await ctx.guild.bans()
         
