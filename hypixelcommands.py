@@ -263,7 +263,7 @@ class HypixelCommands(commands.Cog):
 
         
     @commands.command(name="deny")
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
     
 
     async def deny(self, ctx):
@@ -295,7 +295,7 @@ class HypixelCommands(commands.Cog):
             staffchat = ctx.guild.get_channel(852971000346050594)  
             await staffchat.send(f"{ctx.author.mention} That is not a channel you can use the command 'deny' in.")  
     @commands.command(name="deletechannel", aliases=["dc", "channeldelete"])  
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
 
     async def deletechannel(self, ctx):
         """Deleting a channel if its not a main channel."""
@@ -310,7 +310,7 @@ class HypixelCommands(commands.Cog):
               
               
     @commands.command(name="accept")
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
 
     async def accept(self, ctx, *, ign=None):
         """Accepts an application."""
@@ -494,7 +494,7 @@ class HypixelCommands(commands.Cog):
             return
    
     @commands.command(name="inactive", aliases=["kicklist", "ia"])
-    @commands.has_any_role("Bot Dev", "Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
+    @commands.has_any_role("Warden｡:+*", "Executive｡:+*", "Bloozing", "Demonical｡:+*")
 
     async def inactive(self, ctx):
         """Shows a list and percentage of people who don't make blight reqs."""
@@ -596,14 +596,14 @@ class HypixelCommands(commands.Cog):
                     index = pp[2]
                     duelswins = ppp[0]
                     duelswlr = ppp[1]
-                    if index >= 550 and int(bedwars_star) >= 150 and float(fkdr) >= float(1) and duelswins >= 1500 and duelswlr >= 2:
+                    if index >= 650 and int(bedwars_star) >= 150 and float(fkdr) >= float(1) and duelswins >= 1000 and duelswlr >= 1:
                         async with aiohttp.ClientSession() as session:
                             badname = await session.get(f"https://sessionserver.mojang.com/session/minecraft/profile/{uuid[i]}")
                             ewname = await badname.json()
                             name = ewname["name"]
                         i = i + 1
                         await asyncio.sleep(5)
-                    elif index>= 750 and int(bedwars_star) >= 175 and float(fkdr)>=float(1):
+                    elif index>= 1000 and int(bedwars_star) >= 150 and float(fkdr)>=float(1):
                         async with aiohttp.ClientSession() as session:
                             badname = await session.get(f"https://sessionserver.mojang.com/session/minecraft/profile/{uuid[i]}")
                             ewname = await badname.json()
@@ -635,9 +635,9 @@ class HypixelCommands(commands.Cog):
             gamereqs = bettergamereqs[1:-1]
             embed = discord.Embed(title="Gamereqs", description=f"{gamereqs}", colour = discord.Colour.random())
             await ctx.send(embed=embed)
+            
     @commands.command(name="check", aliases=["ch", "chgq"])
     @commands.cooldown(rate=1, per=10)
-
     async def check(self, ctx, IGN = None):
         def sw_xp_to_lvl(xp):
             xps = [0, 20, 70, 150, 250, 500, 1000, 2000, 3500, 6000, 10000, 15000]
