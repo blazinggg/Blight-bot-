@@ -99,7 +99,7 @@ async def get_reqs(data):
     except:
         fkdr = 0
     try:
-        indexnotint = fkdr*2*bedwars_star
+        indexnotint = (fkdr**2)*bedwars_star
     except: 
         indexnotint = 0
     try:
