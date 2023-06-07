@@ -97,80 +97,19 @@ class HypixelCommands(commands.Cog):
     @commands.command(name="apply")
     async def apply(self, ctx):
         """Creates a channel where you can fill out questions for applications"""
-        
-        def sw_xp_to_lvl(xp):
-            xps = [0, 20, 70, 150, 250, 500, 1000, 2000, 3500, 6000, 10000, 15000]
-            if xp >= 15000:
-                return (xp - 15000) / 10000. + 12
-            else:
-                for i in range(len(xps)):
-                    if xp < xps[i]:
-                        return i + float(xp - xps[i-1]) / (xps[i] - xps[i-1])
-
-        warden = discord.utils.get(ctx.guild.roles, name="Warden｡:+*")
-        executive = discord.utils.get(ctx.guild.roles, name="Executive｡:+*")
-        category = discord.utils.get(ctx.guild.categories)
-        application_channel = await ctx.guild.create_text_channel(f"application {ctx.author.name}")
-        await application_channel.set_permissions(ctx.guild.get_role(ctx.guild.id), send_messages=False, read_messages=False)
-        await application_channel.set_permissions(ctx.author, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
-        await application_channel.set_permissions(executive, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
-        await application_channel.set_permissions(warden, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
-    
-        channel_id = application_channel.id
-        
-        
-        color_list = [0xed864f, 0x00267e]
-        channel = ctx.guild.get_channel(channel_id)
-        display_name = ctx.author.name.capitalize()
-        
+        await ctx.message.delete()
         application = discord.utils.get(ctx.guild.channels, name="applications")
         def check(msg):
             return msg.author == ctx.author and msg.channel == channel
         global color
-        color = random.choice(color_list)
-        print(channel_id)
-        embed = discord.Embed(title="Application Process", description=
-        f"""
-        Welcome to the Blight Application Process. Thank you for your time. The application process will ask you a series of questions to which you will write and send a response to. After completing the application the bot will wait for a staff member to manually review to check for requirements. These can be seen in the {application.mention} channel. After your application has been reviewed, you will be pinged by the bot which will notify you of the status of your application. The statuses are Accepted and Denied. Once again, thank you for considering to join Blight and good luck!
         
-        
-        """
-        , colour=color)
-        embed.set_author(name=display_name, icon_url=random.choice(icon_list))
-
-        await channel.send(f"{ctx.author.mention}", delete_after=0.1)
-        await channel.send(embed=embed)
-        print(ctx.author.mention)
-        
-        embed = discord.Embed(description=f"Hello {ctx.author.mention}, What is your Minecraft IGN?", colour=color)
-        await channel.send(embed=embed)
-        messageign = await self.bot.wait_for('message', check=check)
-        ign = str(messageign.content)
-        
-        fulluuid = await get_uuid(ign)
+        fulluuid = await get_uuid(username)
         if fulluuid.status != 200:
             embed = discord.Embed(title="Failed", description="Please enter a valid IGN")
-            await channel.send(embed=embed)
+            await ctx.send(embed=embed)
         else:
             uuid = await fulluuid.json()
             uuid = uuid["id"]
-            embed = discord.Embed(description="How old are you?", colour=color)
-            await channel.send(embed=embed)
-            age = await self.bot.wait_for('message', check=check)
-            embed = discord.Embed(description="What is your Hypixel level?", colour=color)
-            await channel.send(embed=embed)
-            msg = await self.bot.wait_for('message', check=check)
-            embed = discord.Embed(description="What Game Requirements do you meet?", colour=color)
-            await channel.send(embed=embed)
-            msg = await self.bot.wait_for('message', check=check)
-            embed = discord.Embed(description="Which Hypixel games do you play the most?", colour=color)
-            await channel.send(embed=embed)
-            msg = await self.bot.wait_for('message', check=check)
-            embed = discord.Embed(description="Any additional information we should know?", colour=color)
-            await channel.send(embed=embed)
-            msg = await self.bot.wait_for('message', check=check)
-            embed = discord.Embed(title="Finished!", description="Thank you for your time! Please wait for staff to review the application!", colour=color)
-            await channel.send(embed=embed)
             try:
                 global bedwars_star, bedwars_final_death, bedwars_final_kills, bigfkdr, fkdr, index, swkdr, swlevel 
                 
@@ -180,13 +119,9 @@ class HypixelCommands(commands.Cog):
                     
                 data = await get_data(uuid=uuid)    
                 network_experience = data["player"]["networkExp"]
-                network_level = (math.sqrt((2 * network_experience) + 30625) / 50) - 2.5
-                network_level = round(network_level, 2)
-                if int(network_level) < 55:
-                    embed = discord.Embed(title="You do not make our hypixel level requirement.", description="Please apply only after you make our game requirements and hypixel level requirements.", colour = color)
-                    await channel.send(embed=embed)
-                    await asyncio.sleep(120)
-                    await application_channel.delete()    
+              #Not fixing the indentation from a removed if statement so changed it to something that will always force the else part
+                if 1 == 2:
+                  return
                 else:
                     try:
                         async with aiohttp.ClientSession() as session:
@@ -212,45 +147,101 @@ class HypixelCommands(commands.Cog):
                     
                     print(fkdr)
                     print(bedwars_star)
-                    embed = discord.Embed(title=ign.capitalize(), description=f"**Bedwars:** {bedwars_star} Stars, {fkdr} FKDR, {index} Index score.\n**Duels:** {duels_wins} wins, {duels_wlr} WLR.", colour=color)
-                    await channel.send(embed=embed)
                     checkreq = await check_reqs(bedwars_stats, duels_stats)
-                    if int(age.content) >= 13:
+                    print('Starting gexp section')
+
+                    url = f'https://api.mojang.com/users/profiles/minecraft/{username}?'
+                    async with aiohttp.ClientSession() as session:
+                      response = await session.get(url)
+                      bresponse = await response.json()
+                      uuid = bresponse['id']
+                      print(uuid)
+                      await session.close()
+                      print('Finished finding uuid')
+                    async with aiohttp.ClientSession() as session:
+                      async with session.get(f'https://api.hypixel.net/guild?key={API_KEY}&player={uuid}') as req:
+                        r = await req.json()
+                        print('Found json of guild info')
+                        await session.close()
+                        if r['guild'] != None:
+                          print('Guild was not None')
+                          guild = r['guild']['name']
+                          print('Finding members')
+                          #expHistory = r['guild']['members'][uuid]['expHistory'].values()
+                          for i in r['guild']['members']:
+                            if i['uuid'] == uuid:
+                              member = i
+                          expHistory = member['expHistory'].values()
+                          exp = sum(expHistory)
+                          print(exp)
+                          print('Defining "guildInfo"')
+                          guildInfo = f'Guild: {guild}\nWeekly Gexp: {exp}'
+                          guildresponse = ' Please leave your current guild.'
+                        else:
+                          print('No guild found')
+                          guild = None
+                          guildresponse = ''
+                          print('Defining "guildInfo"')
+                          guildInfo = 'This player is not currently in a guild'
+                  
+                    if 14 >= 13:
                       if checkreq is True:
-                          if str(channel.name) in channel_list:
-                              await channel.send("Something went wrong")
+                          if 1 == 2:
+                              return
                           else:
                               print('bye')
-                              embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slots. **This Channel will be closed in 10 seconds!**", colour=color)
-                              await channel.send(embed=embed)
+                              #embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slot.")
+                              #await ctx.send(embed=embed)
                               
                               waitinglist = discord.utils.get(ctx.guild.channels, name="invite-waiting-list")
+                              print(f"Found waitinglist channel: {waitinglist}")
                               
                               
                               
-                              accepted = discord.utils.get(ctx.guild.roles, name="Accepted")
-                             
-                             
+                              accepted = discord.utils.get(ctx.guild.roles, name="Accepted")               
+                            
                               await ctx.author.add_roles(accepted)
-                              await asyncio.sleep(10)
-                              print('deleting!')
-                              await channel.delete()
-                              await waitinglist.send(f"You have been accepted, {ctx.author.mention}. Please read the pinned message!\nIGN: {ign.capitalize()} (<@587390710974644311>)")
+                              await waitinglist.send(f"You have been accepted, {ctx.author.mention}.{guildresponse}\nIGN: {username.capitalize()}\nGuild: {guild}")
                           
                       else:
-                          embed = discord.Embed(title="Please wait for Staff assistance", description="It seems you do not meet requirements")
-                          await channel.send(embed=embed)
+                          warden = discord.utils.get(ctx.guild.roles, name="Warden｡:+*")
+                          executive = discord.utils.get(ctx.guild.roles, name="Executive｡:+*")
+                          category = discord.utils.get(ctx.guild.categories)
+                          application_channel = await ctx.guild.create_text_channel(f"application {username}")
+                          await application_channel.set_permissions(ctx.guild.get_role(ctx.guild.id), send_messages=False, read_messages=False)
+                          await application_channel.set_permissions(ctx.author, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
+                          await application_channel.set_permissions(executive, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
+                          await application_channel.set_permissions(warden, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
+                      
+                          channel_id = application_channel.id
+                          channel = ctx.guild.get_channel(channel_id)
+                          embed = discord.Embed(title="Guild application", description=f"As you do not meet requirements, we have made an application channel for you so that staff can confirm whether or not you can join the guild.\n\nUsername: {username}\n\nBedwars stats: {bedwars_star} stars, {fkdr} FKDR, {index} index\n\nDuels stats: {duels_wins} wins, {duels_wlr} WLR\n\n{guildInfo}")
+                          await application_channel.send(ctx.author.mention)
+                          await application_channel.send(embed=embed)
                     else:
-                        embed = discord.Embed(title="Please wait for Staff assistance", description="It seems you do not meet requirements")
-                        await channel.send(embed=embed)
+                        warden = discord.utils.get(ctx.guild.roles, name="Warden｡:+*")
+                        executive = discord.utils.get(ctx.guild.roles, name="Executive｡:+*")
+                        category = discord.utils.get(ctx.guild.categories)
+                        application_channel = await ctx.guild.create_text_channel(f"application {username}")
+                        await application_channel.set_permissions(ctx.guild.get_role(ctx.guild.id), send_messages=False, read_messages=False)
+                        await application_channel.set_permissions(ctx.author, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
+                        await application_channel.set_permissions(executive, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
+                        await application_channel.set_permissions(warden, send_messages=True, read_messages=True, add_reactions=True, embed_links=True, attach_files=True, read_message_history=True, external_emojis=True)
+                        channel_id = application_channel.id
+                        channel = ctx.guild.get_channel(channel_id)
+                        embed = discord.Embed(title="Guild Application", description=f"As you do not meet requirements, we have made an application channel for you so that staff can confirm whether or not you can join the guild.\n\nUsername: {username}\n\nBedwars stats: {bedwars_star} stars, {fkdr} FKDR, {index} index.\n\nDuels stats: {duels_wins} wins, {duels_wlr} WLR\n\n{guildInfo}")
+                        await application_channel.send(ctx.author.mention)
+                        await application_channel.send(embed=embed)
+                        
+                        
 
 
             except Exception as e:
                 print(e)
                 embed = discord.Embed(title="Failed", description="Something went wrong, make sure you inputted everything right!, try again or contact a staff")
-                await channel.send(embed=embed)
-                await asyncio.sleep(120)
-                await application_channel.delete()
+                await ctx.send(embed=embed)
+                #await asyncio.sleep(120)
+                #await application_channel.delete()
         
             
         
@@ -350,10 +341,31 @@ class HypixelCommands(commands.Cog):
                     print('bye')
                     embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slots. **This Channel will be closed in 10 seconds!**", colour=permcolor)
                     await ctx.send(embed=embed)
-                    reply = await self.bot.wait_for('message')
+                    #reply = await self.bot.wait_for('message')
                     waitinglist = discord.utils.get(ctx.guild.channels, name="invite-waiting-list")
+                    url = f'https://api.mojang.com/users/profiles/minecraft/{ign}?'
+                    async with aiohttp.ClientSession() as session:
+                      response = await session.get(url)
+                      bresponse = await response.json()
+                      uuid = bresponse['id']
+                      print(uuid)
+                      await session.close()
+                      print('Finished finding uuid')
+                    async with aiohttp.ClientSession() as session:
+                      async with session.get(f'https://api.hypixel.net/guild?key={API_KEY}&player={uuid}') as req:
+                        r = await req.json()
+                        print('Found json of guild info')
+                        await session.close()
+                        if r['guild'] != None:
+                          guild = r['guild']['name']
+                          guildmsg = ' Please leave your current guild.'
+                        else:
+                          guild = 'None'
+                          guildmsg = ''
+                          
+                          
                     
-                    await waitinglist.send(f"You have been accepted, {pingdeny.mention}. Please read the pinned message!\nIGN: {ign.capitalize()}")
+                    await waitinglist.send(f"You have been accepted, {pingdeny.mention}.{guildmsg}\nIGN: {ign.capitalize()}\nGuild: {guild}")
                     
                     
                     x = reply.author
