@@ -95,7 +95,7 @@ class HypixelCommands(commands.Cog):
 
         
     @commands.command(name="apply")
-    async def apply(self, ctx):
+    async def apply(self, ctx, username):
         """Creates a channel where you can fill out questions for applications"""
         await ctx.message.delete()
         application = discord.utils.get(ctx.guild.channels, name="applications")
