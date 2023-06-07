@@ -41,9 +41,10 @@ class HypixelCommands(commands.Cog):
         self.last_msg = None
    
     
-    @commands.command(name="h")
-    async def h(self, ctx, ign):
-        uuid = await get_uuid(f"{ign}")
+    @commands.command(name="discord")
+    async def discord(self, ctx, ign):
+        r = requests.get(f'https://api.mojang.com/users/profiles/minecraft/{ign}?').json()
+        uuid = r['id']
         url_v2 = f"https://api.hypixel.net/player?key={API_KEY}&uuid={uuid}"
         print(url_v2)
         async with aiohttp.ClientSession() as session:
@@ -61,11 +62,8 @@ class HypixelCommands(commands.Cog):
         
         IGN = message
 
-        async with aiohttp.ClientSession() as session:
-            url = f'https://api.mojang.com/users/profiles/minecraft/{IGN}?'
-            response = await session.get(url)
-            bresponse = await response.json()
-        uuid = bresponse['id']
+        r = requests.get(f'https://api.mojang.com/users/profiles/minecraft/{ign}?').json()
+        uuid = r['id']
 
         url_v2 = f"https://api.hypixel.net/player?key={API_KEY}&uuid={uuid}"
         print(url_v2)
@@ -81,7 +79,7 @@ class HypixelCommands(commands.Cog):
         
         
         embed = discord.Embed(title="Not bad", description=f"You've only fallen off {stat} times! Good job!", colour=0xd10a07)
-        embed.set_author(name=IGN, icon_url="https://cdn.discordapp.com/emojis/821827657637167124.gif")
+        embed.set_author(name=ign, icon_url="https://cdn.discordapp.com/emojis/821827657637167124.gif")
         await ctx.send(embed=embed)
     @commands.command(name="delete")
     @commands.has_role("Bloozing")
