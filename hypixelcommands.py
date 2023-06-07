@@ -93,14 +93,17 @@ class HypixelCommands(commands.Cog):
 
         
     @commands.command(name="apply")
-    async def apply(self, ctx, username):
+    async def apply(self, ctx, username=None):
         """Creates a channel where you can fill out questions for applications"""
         await ctx.message.delete()
         application = discord.utils.get(ctx.guild.channels, name="applications")
         def check(msg):
             return msg.author == ctx.author and msg.channel == channel
         global color
-        
+        if username == None:
+          embed = discord.Embed(title="Failed", description="Please enter a valid IGN")
+          await ctx.send(embed=embed)
+          return
         fulluuid = await get_uuid(username)
         if fulluuid.status != 200:
             embed = discord.Embed(title="Failed", description="Please enter a valid IGN")
