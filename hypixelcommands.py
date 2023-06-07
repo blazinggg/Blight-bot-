@@ -711,10 +711,7 @@ class HypixelCommands(commands.Cog):
             
     @commands.command(name="requirements", aliases=["r", "reqs"])
     async def requirements(self, ctx):
-        embed = discord.Embed(title="**Game Requirements**", description="""Skywars: 10 Star + 1 KDR OR 12 Star
- Bedwars: 200+ Index Score + Minimum 100+ Star + 1+ FKDR │Index score = Stars x FKDR
- Duels: Overall Master + 2 WLR OR Overall Legend
- Skyblock: 4K Weight""", colour = discord.Colour.random())
+        embed = discord.Embed(title="**Game Requirements**", description="Overall: 150+ bedwars stars and 1 FKDR + 1 of the following options\n\n__Option 1__\n1000+ Index\n\n__Option 2__\n650+ Index\n2000 Duels Wins\n1 Duels WLR\n\n\nINDEX = STARS x FKDR²", colour = discord.Colour.random())
         await ctx.send(embed=embed)
     
 
