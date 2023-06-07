@@ -686,21 +686,21 @@ class HypixelCommands(commands.Cog):
     async def invited(self, ctx, member):
         await ctx.message.delete()
       
-      url = f'https://api.mojang.com/users/profiles/minecraft/{member}?'
-      async with aiohttp.ClientSession() as session:
-        response = await session.get(url)
-        bresponse = await response.json()
-        uuid = bresponse['id']
-        async with aiohttp.ClientSession() as session:
-          baddata = await session.get(f"https://api.hypixel.net/player?key={API_KEY}&uuid={uuid}")
-          data = await baddata.json()
-          rqo, rqt = await get_reqs(data)
-          chrq = await check_reqs(rqo, rqt)
-          ctx.channel.id = 733166354764660767
-          if chrq == True:
-            await ctx.send(f'`{member}` was invited by {ctx.author.mention} :white_check_mark:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
-          else:
-            await ctx.send(f'`{member}` was invited by {ctx.author.mention} :x:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
+          url = f'https://api.mojang.com/users/profiles/minecraft/{member}?'
+          async with aiohttp.ClientSession() as session:
+            response = await session.get(url)
+            bresponse = await response.json()
+            uuid = bresponse['id']
+            async with aiohttp.ClientSession() as session:
+              baddata = await session.get(f"https://api.hypixel.net/player?key={API_KEY}&uuid={uuid}")
+              data = await baddata.json()
+              rqo, rqt = await get_reqs(data)
+              chrq = await check_reqs(rqo, rqt)
+              ctx.channel.id = 733166354764660767
+              if chrq == True:
+                await ctx.send(f'`{member}` was invited by {ctx.author.mention} :white_check_mark:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
+              else:
+                await ctx.send(f'`{member}` was invited by {ctx.author.mention} :x:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
 
 
 
