@@ -6,6 +6,7 @@ from discord.ext import commands
 import discord
 import asyncio
 from datetime import datetime
+from discord import Member
 import random
 from decimal import *
 from discord.ext.commands import has_permissions, MissingPermissions
@@ -53,6 +54,29 @@ class HypixelCommands(commands.Cog):
 
         social = data["player"]["socialMedia"]["links"]["DISCORD"]
         await ctx.send(str(social))
+    
+    #Command for recruiters to toggle the "Accepted" role on members    
+    @commands.command(name="accepted")
+    @commands.has_any_role("Recruiter｡:+*", "Warden｡:+*", "Executive｡:+*", "Demonical｡:+*")
+    async def accepted(self, ctx, member: Member):
+    #Defining accepted role and stuff
+      await ctx.message.delete()
+      accepted = discord.utils.get(ctx.guild.roles, name="Accepted")
+    #If they already have the accepted role
+      if accepted in member.roles:
+        await member.remove_roles(accepted)
+        embed = discord.Embed(title="**Success!**", description=f"Removed Accepted role from {member.mention}", colour=0xd10a07)
+        success = await ctx.send(embed=embed)
+        await asyncio.sleep(3)
+        await success.delete()
+      #If they don't  
+      else:
+        await member.add_roles(accepted)
+        embed = discord.Embed(title="**Success!**", description=f"Added Accepted role to {member.mention}", colour=0xd10a07)
+        success = await ctx.send(embed=embed)
+        await asyncio.sleep(3)
+        await success.delete()
+                
         
 
 
