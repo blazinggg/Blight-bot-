@@ -31,8 +31,7 @@ activities = [
 activity = random.choice(activities)
 
 bot = commands.Bot(command_prefix="b!",
-                   intents=intents,
-                   status=discord.Status.offline)
+                   intents=intents)
 
 
 class MyNewHelp(commands.MinimalHelpCommand):
