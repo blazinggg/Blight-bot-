@@ -349,12 +349,12 @@ class HypixelCommands(commands.Cog):
                 embed = discord.Embed(title="Accepted!", description="Congrats you have been accepted! You have been given the Accepted role and will be pinged when we have open slots.", colour=permcolor)
                 await ctx.send(embed=embed)
 
-                reply = await self.bot.wait_for('message', check=check)
+                #reply = await self.bot.wait_for('message', check=check)
                 
                 
                 
-                x = reply.author
-                print(x)
+                #x = reply.author
+                #print(x)
                 await pingdeny.add_roles(accepted)
                 await asyncio.sleep(10)
                 print('deleting!')
@@ -395,8 +395,8 @@ class HypixelCommands(commands.Cog):
                     await waitinglist.send(f"You have been accepted, {pingdeny.mention}.{guildmsg}\nIGN: {ign.capitalize()}\nGuild: {guild}")
                     
                     
-                    x = reply.author
-                    print(x)
+                    #x = reply.author
+                    #print(x)
                     await pingdeny.add_roles(accepted)
                     await asyncio.sleep(10)
                     print('deleting!')
