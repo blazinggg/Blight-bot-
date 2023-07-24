@@ -120,10 +120,10 @@ async def check_reqs(bedwars_stats, duels_stats):
     duels_wins = duels_stats[0]
     duels_wlr = duels_stats[1]
   
-    if int(index) >= 650 and int(bedwars_star) >= 150 and float(fkdr) >= float(1) and int(duels_wins) >= 1000 and float(duels_wlr) >= float(1):
+    if int(index) >= 1000 and int(duels_wins) >= 3000 and float(duels_wlr) >= float(2):
         return True
 
-    elif int(bedwars_star) >= 150 and float(fkdr) >= float(1) and int(index) >= 1000:
+    elif int(index) >= 2000:
         return True
     else:
         return False
