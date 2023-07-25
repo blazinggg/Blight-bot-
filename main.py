@@ -23,6 +23,7 @@ token = os.environ["token"]
 intents = discord.Intents.default()
 intents.members = True
 intents.reactions = True
+intents.message_content = True
 activities = [
     discord.Game(name="Playing with Blight nons"),
     discord.Activity(type=discord.ActivityType.watching,
