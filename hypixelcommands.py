@@ -723,11 +723,11 @@ class HypixelCommands(commands.Cog):
               data = await baddata.json()
               rqo, rqt = await get_reqs(data)
               chrq = await check_reqs(rqo, rqt)
-              ctx.channel.id = 733166354764660767
+              invited_channel = self.bot.get_channel(733166354764660767)
               if chrq == True:
-                await ctx.send(f'`{member}` was invited by {ctx.author.mention} :white_check_mark:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
+                await invited_channel.send(f'`{member}` was invited by {ctx.author.mention} :white_check_mark:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
               else:
-                await ctx.send(f'`{member}` was invited by {ctx.author.mention} :x:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
+                await invited_channel.send(f'`{member}` was invited by {ctx.author.mention} :x:\n`Reminder:` This command is not automatic, please run `b!invited` to log your invites')
 
 
 
