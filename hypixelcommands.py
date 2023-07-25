@@ -84,7 +84,7 @@ class HypixelCommands(commands.Cog):
     async def void(self, ctx, message):
         """Shows the amount of void deaths of a user in bedwars."""
         
-        IGN = message
+        ign = message
 
         r = requests.get(f'https://api.mojang.com/users/profiles/minecraft/{ign}?').json()
         uuid = r['id']
