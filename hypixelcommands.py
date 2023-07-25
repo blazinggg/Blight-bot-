@@ -713,8 +713,8 @@ class HypixelCommands(commands.Cog):
     async def invited(self, ctx, member):
         await ctx.message.delete()
       
-          url = f'https://api.mojang.com/users/profiles/minecraft/{member}?'
-          async with aiohttp.ClientSession() as session:
+        url = f'https://api.mojang.com/users/profiles/minecraft/{member}?'
+        async with aiohttp.ClientSession() as session:
             response = await session.get(url)
             bresponse = await response.json()
             uuid = bresponse['id']
