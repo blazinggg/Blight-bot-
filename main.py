@@ -45,17 +45,15 @@ class MyNewHelp(commands.MinimalHelpCommand):
 
 bot.help_command = MyNewHelp()
 
-bot.load_extension("Error")
-
-bot.load_extension("leaderboards")
-
-bot.load_extension("somecommands")
-
-bot.load_extension("hypixelcommands")
-
-bot.load_extension("moderativecommands")
-
-bot.load_extension("Image")
+@bot.event
+async def on_ready():
+    
+	await bot.load_extension("Error")
+	await bot.load_extension("leaderboards")
+	await bot.load_extension("somecommands")
+	await bot.load_extension("hypixelcommands")
+	await bot.load_extension("moderativecommands")
+	await bot.load_extension("Image")
 
 keep()
 print("Check")
