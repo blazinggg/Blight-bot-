@@ -225,8 +225,8 @@ class Cool(commands.Cog):
 
         
 
-def setup(bot: commands.Bot):
-    bot.add_cog(Cool(bot))
+async def setup(bot: commands.Bot):
+    await bot.add_cog(Cool(bot))
 
 
 
