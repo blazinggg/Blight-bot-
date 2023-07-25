@@ -27,5 +27,5 @@ class ErrorHandler(commands.Cog):
         embed = discord.Embed(title="Error!", description=f"{message}", colour=discord.Colour.random())
         await ctx.send(embed=embed, delete_after=5)
 
-def setup(bot: commands.Bot):
-    bot.add_cog(ErrorHandler(bot))
+async def setup(bot: commands.Bot):
+    await bot.add_cog(ErrorHandler(bot))
