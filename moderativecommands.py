@@ -333,5 +333,5 @@ class ModerativeCommands(commands.Cog):
 
     
 
-def setup(bot: commands.Bot):
-    bot.add_cog(ModerativeCommands(bot))
+async def setup(bot: commands.Bot):
+    await bot.add_cog(ModerativeCommands(bot))
